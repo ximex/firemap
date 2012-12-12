@@ -1,9 +1,10 @@
-function getHydranten(map,featureLayer){	
+function getHydranten(map,featureLayer,featureLayerR){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
+	featureLayerR.clearLayers();
 	
 	if(map.getZoom() < 16){
 		return;
@@ -43,19 +44,23 @@ function getHydranten(map,featureLayer){
 			'ways': ways,
 			'relations': relations
 		}
-		getHydrantenObjects(featureLayer,objects.nodes);
+		featureLayer.clearLayers();
+		featureLayerR.clearLayers();
+		
+		getHydrantenObjects(featureLayer,featureLayerR,objects.nodes);
 	});
 }
 
-function getHydrantenObjects(featureLayer,nodes){
+function getHydrantenObjects(featureLayer,featureLayerR,nodes){
 	var icon = getFeatureIcon('emergency=fire_hydrant',16);
 	var show = ['fire_hydrant:type','fire_hydrant:count','fire_hydrant:position'];
+	var radius_obj = {radius: 150, color: '#00f'};
 	
 	for(var node in nodes){
 		var obj = nodes[node];
 		var point = new L.LatLng(obj.lat,obj.lon);
 		var title = 'Hydrant';
 		var tags = obj.tags;
-		addPointFeature(featureLayer,point,icon,title,tags,show);
+		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
 	}
 }

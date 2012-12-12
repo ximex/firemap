@@ -37,9 +37,12 @@ function getBaseLayers(){
 function getOverlays(){
 	return {
 		"Feuerwehr": new L.LayerGroup(),
+		"FeuerwehrRadius": new L.LayerGroup(),
 		"Hydranten": new L.LayerGroup(),
+		"HydrantenRadius": new L.LayerGroup(),
 		//"Wasser": new L.LayerGroup(),
-		"Spital": new L.LayerGroup()
+		"Spital": new L.LayerGroup(),
+		"SpitalRadius": new L.LayerGroup()
 	};
 }
 
@@ -47,9 +50,12 @@ function addLayers(map,baseLayers,overlays){
 	map.addLayer(baseLayers.OpenStreetMap);
 	
 	map.addLayer(overlays.Feuerwehr);
+	//map.addLayer(overlays.FeuerwehrRadius);
 	map.addLayer(overlays.Hydranten);
+	//map.addLayer(overlays.HydrantenRadius);
 	//map.addLayer(overlays.Wasser);
 	map.addLayer(overlays.Spital);
+	//map.addLayer(overlays.SpitalRadius);
 }
 
 function addControls(map,baseLayers,overlays){
@@ -59,13 +65,13 @@ function addControls(map,baseLayers,overlays){
 }
 
 function getData(map,overlays){
-	getFeuerwehr(map,overlays.Feuerwehr);
-	getHydranten(map,overlays.Hydranten);
+	getFeuerwehr(map,overlays.Feuerwehr,overlays.FeuerwehrRadius);
+	getHydranten(map,overlays.Hydranten,overlays.HydrantenRadius);
 	//getWasser(map,overlays.Wasser);
-	getSpital(map,overlays.Spital);
+	getSpital(map,overlays.Spital,overlays.SpitalRadius);
 	
-	map.on('moveend',function(){getFeuerwehr(map,overlays.Feuerwehr)});
-	map.on('moveend',function(){getHydranten(map,overlays.Hydranten)});
+	map.on('moveend',function(){getFeuerwehr(map,overlays.Feuerwehr,overlays.FeuerwehrRadius)});
+	map.on('moveend',function(){getHydranten(map,overlays.Hydranten,overlays.HydrantenRadius)});
 	//map.on('moveend',function(){getWasser(map,overlays.Wasser)});
-	map.on('moveend',function(){getSpital(map,overlays.Spital)});
+	map.on('moveend',function(){getSpital(map,overlays.Spital,overlays.SpitalRadius)});
 }

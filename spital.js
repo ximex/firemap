@@ -1,11 +1,12 @@
-function getSpital(map,featureLayer){	
+function getSpital(map,featureLayer,featureLayerR){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
+	featureLayerR.clearLayers();
 	
-	if(map.getZoom() < 11){
+	if(map.getZoom() < 10){
 		return;
 	}
 	
@@ -17,7 +18,6 @@ function getSpital(map,featureLayer){
 	$.getJSON(
 		overpass_query,
 		function(data, textStatus){
-			//alert(textStatus);
 			$.each(
 				data.elements,
 				function(index,obj){
@@ -44,13 +44,17 @@ function getSpital(map,featureLayer){
 			'ways': ways,
 			'relations': relations
 		}
-		getSpitalObjects(featureLayer,objects.nodes,objects.ways);
+		featureLayer.clearLayers();
+		featureLayerR.clearLayers();
+		
+		getSpitalObjects(featureLayer,featureLayerR,objects.nodes,objects.ways);
 	});
 }
 
-function getSpitalObjects(featureLayer,nodes,ways){
+function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
 	var icon = getFeatureIcon('amenity=hospital',16);
 	var show = ['addr:housenumber','addr:street'];
+	var radius_obj = {radius: 15000, color: '#f0f'};
 	
 	for(var wayId in ways){
 		var obj = ways[wayId];
@@ -66,7 +70,7 @@ function getSpitalObjects(featureLayer,nodes,ways){
 			var title = 'Spital';
 		}
 		var tags = obj.tags;
-		addPointFeature(featureLayer,point,icon,title,tags,show);
+		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
 	}
 	
 	for(var nodeId in nodes){
@@ -80,7 +84,7 @@ function getSpitalObjects(featureLayer,nodes,ways){
 					var title = 'Spital';
 				}
 				var tags = obj.tags;
-				addPointFeature(featureLayer,point,icon,title,tags,show);
+				addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
 			}
 		}
 	}

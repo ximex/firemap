@@ -6,7 +6,16 @@ function getFeatureIcon(iconType,size){
 	});
 }
 
-function addPointFeature(featureLayer,point,icon,title,tags,show){	
+function addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj){
+	featureLayerR.addLayer(
+		new L.Circle(point,radius_obj.radius,
+		{
+			weight: 1,
+			clickable: false,
+			color: radius_obj.color,
+			fillColor: radius_obj.color
+		})
+	);
 	featureLayer.addLayer(
 		new L.Marker(
 			point,
@@ -18,7 +27,7 @@ function addPointFeature(featureLayer,point,icon,title,tags,show){
 	);
 }
 
-/*function addLineFeature(featureLayer,point,icon,title,tags,show){	
+/*function addLineFeature(featureLayer,point,icon,title,tags,show){
 	featureLayer.addLayer(
 		new L.Marker(
 			point,
@@ -30,7 +39,7 @@ function addPointFeature(featureLayer,point,icon,title,tags,show){
 	);
 }
 
-function addAreaFeature(featureLayer,point,icon,title,tags,show){	
+function addAreaFeature(featureLayer,point,icon,title,tags,show){
 	featureLayer.addLayer(
 		new L.Marker(
 			point,

@@ -1,9 +1,10 @@
-function getFeuerwehr(map,featureLayer){	
+function getFeuerwehr(map,featureLayer,featureLayerR){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
+	featureLayerR.clearLayers();
 	
 	if(map.getZoom() < 12){
 		return;
@@ -17,7 +18,6 @@ function getFeuerwehr(map,featureLayer){
 	$.getJSON(
 		overpass_query,
 		function(data, textStatus){
-			//alert(textStatus);
 			$.each(
 				data.elements,
 				function(index,obj){
@@ -44,13 +44,17 @@ function getFeuerwehr(map,featureLayer){
 			'ways': ways,
 			'relations': relations
 		}
-		getFeuerwehrObjects(featureLayer,objects.nodes,objects.ways);
+		featureLayer.clearLayers();
+		featureLayerR.clearLayers();
+		
+		getFeuerwehrObjects(featureLayer,featureLayerR,objects.nodes,objects.ways);
 	});
 }
 
-function getFeuerwehrObjects(featureLayer,nodes,ways){
+function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 	var icon = getFeatureIcon('amenity=fire_station',16);
 	var show = ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website'];
+	var radius_obj = {radius: 1500, color: '#f00'};
 	
 	for(var wayId in ways){
 		var obj = ways[wayId];
@@ -66,7 +70,7 @@ function getFeuerwehrObjects(featureLayer,nodes,ways){
 			var title = 'Feuerwehr';
 		}
 		var tags = obj.tags;
-		addPointFeature(featureLayer,point,icon,title,tags,show);
+		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
 	}
 	
 	for(var nodeId in nodes){
@@ -80,7 +84,7 @@ function getFeuerwehrObjects(featureLayer,nodes,ways){
 					var title = 'Feuerwehr';
 				}
 				var tags = obj.tags;
-				addPointFeature(featureLayer,point,icon,title,tags,show);
+				addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
 			}
 		}
 	}

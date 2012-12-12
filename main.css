@@ -1,0 +1,41 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+html, body, #map {
+	height: 100%;
+}
+
+#radius_menu {
+	position: fixed;
+	top: 64px;
+	right: 10px;
+	padding: 5px;
+	border-radius: 8px;
+	background-color: #fff;
+	box-shadow: #666 0 0 8px;
+}
+
+#radius_menu>img {
+	display: block;
+}
+
+#radius_menu:hover>img {
+	display: none;
+}
+
+#radius_menu>div {
+	display: none;
+}
+
+#radius_menu:hover>div {
+	display: block;
+}
+
+#radius_menu h4 {
+	margin: 0 0 8px;
+}
+
+#radius_menu ul {
+	list-style:none;margin:0;padding:0
+}

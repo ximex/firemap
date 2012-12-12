@@ -8,6 +8,7 @@
 <title>FireMap</title>
 
 <link rel="stylesheet" href="normalize.css" />
+<link rel="stylesheet" href="main.css" />
 <link rel="stylesheet" href="leaflet/leaflet.css" />
 <link rel="stylesheet" href="L.Control.Zoomslider/L.Control.Zoomslider.css" />
 <link rel="stylesheet" href="L.Control.Locate/L.Control.Locate.css" />
@@ -16,16 +17,6 @@
 	<link rel="stylesheet" href="L.Control.Zoomslider/L.Control.Zoomslider.ie.css" />
 	<link rel="stylesheet" href="L.Control.Locate/L.Control.Locate.ie.css" />
 <![endif]-->
-
-<style type="text/css">
-body {
-	padding: 0;
-	margin: 0;
-}
-html, body, #map {
-	height: 100%;
-}
-</style>
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="browser-update.js"></script>
@@ -46,6 +37,19 @@ html, body, #map {
 <body>
 
 <div id="map"></div>
+
+<!--<div id="radius_menu">
+	<img src="icons/radius.png" alt="Radius" width="26" height="26" />
+	<div>
+		<h4>Radius anzeigen</h4>
+		<ul>
+			<li><label><input type="checkbox" id="radius_feuerwehr" /> Feuerwehr (1,5km)</label></li>
+			<li><label><input type="checkbox" id="radius_hydrant" /> Hydrant (150m)</label></li>
+			<li><label><input type="checkbox" id="radius_wasser" /> Wasser (100m?)</label></li>
+			<li><label><input type="checkbox" id="radius_spital" /> Spital (15km)</label></li>
+		</ul>
+	</div>
+</div>-->
 
 </body>
 
