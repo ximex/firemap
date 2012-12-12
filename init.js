@@ -35,14 +35,10 @@ function getBaseLayers(){
 }
 
 function getOverlays(){
-	var feuerwehr = new L.LayerGroup();
-	var hydranten = new L.LayerGroup();
-	var wasser = new L.LayerGroup();
-	
 	return {
-		"Feuerwehr": feuerwehr,
-		"Hydranten": hydranten,
-		"Wasser": wasser
+		"Feuerwehr": new L.LayerGroup(),
+		"Hydranten": new L.LayerGroup(),
+		//"Wasser": new L.LayerGroup()
 	};
 }
 
@@ -51,21 +47,21 @@ function addLayers(map,baseLayers,overlays){
 	
 	map.addLayer(overlays.Feuerwehr);
 	map.addLayer(overlays.Hydranten);
-	map.addLayer(overlays.Wasser);
+	//map.addLayer(overlays.Wasser);
 }
 
-function addControls(map,baseLayers,overlays){	
+function addControls(map,baseLayers,overlays){
 	map.addControl(new L.Control.Scale());
-	map.addControl(new L.Control.Layers(baseLayers,overlays));
 	map.addControl(new L.Control.Locate({follow: true}));
+	map.addControl(new L.Control.Layers(baseLayers,overlays));
 }
 
-function getData(){
+function getData(map,overlays){
 	getFeuerwehr(map,overlays.Feuerwehr);
 	getHydranten(map,overlays.Hydranten);
-	getWasser(map,overlays.Wasser);
+	//getWasser(map,overlays.Wasser);
 	
 	map.on('moveend',function(){getFeuerwehr(map,overlays.Feuerwehr)});
 	map.on('moveend',function(){getHydranten(map,overlays.Hydranten)});
-	map.on('moveend',function(){getWasser(map,overlays.Wasser)});
+	//map.on('moveend',function(){getWasser(map,overlays.Wasser)});
 }
