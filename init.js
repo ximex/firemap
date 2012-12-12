@@ -54,8 +54,8 @@ function addLayers(map,baseLayers,overlays){
 
 function addControls(map,baseLayers,overlays){
 	map.addControl(new L.Control.Scale());
-	map.addControl(new L.Control.Locate({follow: true}));
 	map.addControl(new L.Control.Layers(baseLayers,overlays));
+	//map.addControl(new L.Control.Locate({follow: true}));
 }
 
 function getData(map,overlays){

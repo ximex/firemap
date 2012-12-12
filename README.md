@@ -2,12 +2,18 @@
 
 Karte für Feuerwehren
 
+## Features
+
 Anzeige von:
 
 * Feuerwehrhäuser + Details
 * Hydranten + Details
 * Wasserstellen + Details
 * Spitäler + Details
+
+## Demo
+
+[http://rfmtc.no-ip.org/osm/firemap/](http://rfmtc.no-ip.org/osm/firemap/)
 
 ## Technologien
 
