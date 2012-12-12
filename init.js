@@ -38,7 +38,8 @@ function getOverlays(){
 	return {
 		"Feuerwehr": new L.LayerGroup(),
 		"Hydranten": new L.LayerGroup(),
-		//"Wasser": new L.LayerGroup()
+		//"Wasser": new L.LayerGroup(),
+		"Spital": new L.LayerGroup()
 	};
 }
 
@@ -48,6 +49,7 @@ function addLayers(map,baseLayers,overlays){
 	map.addLayer(overlays.Feuerwehr);
 	map.addLayer(overlays.Hydranten);
 	//map.addLayer(overlays.Wasser);
+	map.addLayer(overlays.Spital);
 }
 
 function addControls(map,baseLayers,overlays){
@@ -60,8 +62,10 @@ function getData(map,overlays){
 	getFeuerwehr(map,overlays.Feuerwehr);
 	getHydranten(map,overlays.Hydranten);
 	//getWasser(map,overlays.Wasser);
+	getSpital(map,overlays.Spital);
 	
 	map.on('moveend',function(){getFeuerwehr(map,overlays.Feuerwehr)});
 	map.on('moveend',function(){getHydranten(map,overlays.Hydranten)});
 	//map.on('moveend',function(){getWasser(map,overlays.Wasser)});
+	map.on('moveend',function(){getSpital(map,overlays.Spital)});
 }

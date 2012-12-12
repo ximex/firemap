@@ -106,7 +106,7 @@ function addWasserFeature(featureLayer,point,tags){
 	var featureIcon = getFeatureIcon('amenity=fire_station',16);
 	
 	if(!tags.name){
-		tags.name = 'Feuerwehrhaus';
+		tags.name = 'Wasser';
 	}
 	
 	featureLayer.addLayer(

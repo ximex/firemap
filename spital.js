@@ -1,17 +1,17 @@
-function getFeuerwehr(map,featureLayer){	
+function getSpital(map,featureLayer){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 12){
+	if(map.getZoom() < 11){
 		return;
 	}
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';
-	var query = '[out:json];(way(BBOX)TAGS;way(BBOX)TAGS;node(w);node(BBOX)TAGS;);out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, '[amenity=fire_station]');
+	var query = '[out:json];(way(BBOX)TAGS;way(BBOX)TAGS;node(w);node(BBOX)TAGS;);out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, '[amenity=hospital][emergency=yes]');
 	var overpass_query = url + query;
 	
 	$.getJSON(
@@ -44,11 +44,11 @@ function getFeuerwehr(map,featureLayer){
 			'ways': ways,
 			'relations': relations
 		}
-		getFeuerwehrObjects(featureLayer,objects.nodes,objects.ways);
+		getSpitalObjects(featureLayer,objects.nodes,objects.ways);
 	});
 }
 
-function getFeuerwehrObjects(featureLayer,nodes,ways){
+function getSpitalObjects(featureLayer,nodes,ways){
 	for(var wayId in ways){
 		var way = ways[wayId];
 		var way_nodes = [];
@@ -56,24 +56,24 @@ function getFeuerwehrObjects(featureLayer,nodes,ways){
 			var nodeId = ways[wayId].nodes[i];
 			way_nodes[i] = new L.LatLng(nodes[nodeId].lat,nodes[nodeId].lon);
 		}
-		addFeuerwehrFeature(featureLayer,new L.Polygon(way_nodes).getCenter(),way.tags);
+		addSpitalFeature(featureLayer,new L.Polygon(way_nodes).getCenter(),way.tags);
 	}
 	
 	for(var nodeId in nodes){
 		var node = nodes[nodeId];
 		if(node.tags){
-			if(node.tags.amenity == 'fire_station'){
-				addFeuerwehrFeature(featureLayer,new L.LatLng(node.lat,node.lon),node.tags);
+			if(node.tags.amenity == 'hospital'){
+				addSpitalFeature(featureLayer,new L.LatLng(node.lat,node.lon),node.tags);
 			}
 		}
 	}
 }
 
-function addFeuerwehrFeature(featureLayer,point,tags){
-	var featureIcon = getFeatureIcon('amenity=fire_station',16);
+function addSpitalFeature(featureLayer,point,tags){
+	var featureIcon = getFeatureIcon('amenity=hospital',20);
 	
 	if(!tags.name){
-		tags.name = 'Feuerwehrhaus';
+		tags.name = 'Spital';
 	}
 	
 	featureLayer.addLayer(
