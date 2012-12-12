@@ -1,40 +1,40 @@
-function translate(language,value){
-	switch(value){
+function translate(key,value){
+	switch(key){
 		case 'fire_hydrant':
-			return 'Hydrant';
-			break;
+			return ['Hydrant',value];
 		case 'fire_hydrant:type':
-			return 'Type:';
-			break;
-		case 'pillar':
-			return 'Überflur';
-			break;
-		case 'underground ':
-			return 'Unterflur';
-			break;
-		case 'wall':
-			return 'Wandanschluss';
-			break;
+			key = 'Type:';
+			switch(value){
+				case 'pillar':
+					return [key,'Überflur'];
+				case 'underground':
+					return [key,'Unterflur'];
+				case 'wall':
+					return [key,'Wandanschluss'];
+				default:
+					return [key,value];
+			}
 		case 'fire_hydrant:count':
-			return 'Anzahl:';
-			break;
+			return ['Anzahl:',value];
+		case 'fire_hydrant:position':
+			return ['Position:',value];
 		case 'addr:country':
-			return 'Land:';
-			break;
+			return ['Land:',value];
 		case 'addr:postcode':
-			return 'PLZ:';
-			break;
+			return ['PLZ:',value];
 		case 'addr:city':
-			return 'Ort:';
-			break;
+			return ['Ort:',value];
 		case 'addr:street':
-			return 'Straße:';
-			break;
+			return ['Straße:',value];
 		case 'addr:housenumber':
-			return 'Hausnummer:';
-			break;
+			return ['Hausnummer:',value];
+		case 'phone':
+			return ['Telefonnummer:',value];
+		case 'email':
+			return ['Email:',value];
+		case 'website':
+			return ['Webseite:',value];
 		default:
-			return value;
-			break;
+			return [key,value];
 	}
 }

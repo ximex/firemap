@@ -5,7 +5,7 @@ function getHydranten(map,featureLayer){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 15){
+	if(map.getZoom() < 16){
 		return;
 	}
 	
@@ -47,23 +47,15 @@ function getHydranten(map,featureLayer){
 	});
 }
 
-function getHydrantenObjects(featureLayer,nodes){	
+function getHydrantenObjects(featureLayer,nodes){
+	var icon = getFeatureIcon('emergency=fire_hydrant',16);
+	var show = ['fire_hydrant:type','fire_hydrant:count','fire_hydrant:position'];
+	
 	for(var node in nodes){
 		var obj = nodes[node];
-		addHydrantenFeature(featureLayer,new L.LatLng(obj.lat,obj.lon),obj.tags);
+		var point = new L.LatLng(obj.lat,obj.lon);
+		var title = 'Hydrant';
+		var tags = obj.tags;
+		addPointFeature(featureLayer,point,icon,title,tags,show);
 	}
-}
-
-function addHydrantenFeature(featureLayer,point,tags){
-	var featureIcon = getFeatureIcon('amenity=fire_station',16);
-	
-	featureLayer.addLayer(
-		new L.Marker(
-			point,
-			{
-				//icon: featureIcon,
-				title: 'Hydrant'
-			}
-		).bindPopup('Hydrant')
-	);
 }

@@ -6,21 +6,67 @@ function getFeatureIcon(iconType,size){
 	});
 }
 
-function getPopupContent(id,tags,title,showTags){
-	var headline = '';
-	for(var key in tags){
-		if(key == title){
-			headline = $('<h2>').text(translate(app_lang,tags[key])).append(' - ').append($('<small>')).append($('<a>').attr({href: 'http://www.openstreetmap.org/browse/node/'+ id, target: '_blank'}).text('Browse'));
-			break;
-		}
-	}
-	var table = $('<table>');//.attr('border','1').css('border-collapse','collapse');
-	for(var key in tags){
-		for(var i=0;i<showTags.length;i++){
-			if(showTags[i] == key){
-				table.append($('<tr>').append($('<th>').text(translate(app_lang,key)).css('text-align','left')).append($('<td>').text(translate(app_lang,tags[key])).css('padding-left','8px')));
+function addPointFeature(featureLayer,point,icon,title,tags,show){	
+	featureLayer.addLayer(
+		new L.Marker(
+			point,
+			{
+				icon: icon,
+				title: title
+			}
+		).bindPopup(getPopupContent(title,tags,show),{maxWidth:512})
+	);
+}
+
+/*function addLineFeature(featureLayer,point,icon,title,tags,show){	
+	featureLayer.addLayer(
+		new L.Marker(
+			point,
+			{
+				icon: icon,
+				title: title
+			}
+		).bindPopup(getPopupContent(title,tags,show))
+	);
+}
+
+function addAreaFeature(featureLayer,point,icon,title,tags,show){	
+	featureLayer.addLayer(
+		new L.Marker(
+			point,
+			{
+				icon: icon,
+				title: title
+			}
+		).bindPopup(getPopupContent(title,tags,show))
+	);
+}*/
+
+function getPopupContent(title,tags,show){
+	var headline = $('<h2>').text(title);
+	
+	var table = $('<table>')//.attr('border','2').css('border','solid 1px #000');
+	for(var i in show){
+		for(var key in tags){
+			if(show[i] == key){
+				var value = checkValueFormat(key,tags[key]);
+				var trans = translate(key,value);
+				key = trans[0]
+				value = trans[1];
+				table.append($('<tr>').append($('<th>').css('text-align','left').append($('<nobr>').text(key))).append($('<td>').append($('<nobr>').append(value).css('padding-left','8px'))));
 			}
 		}
 	}
 	return $('<div>').append(headline).append(table).html();
+}
+
+function checkValueFormat(key,value){
+	switch(key){
+		case 'website':
+			return $('<a>').attr('href',value).text(value);
+		case 'email':
+			return $('<a>').attr('href','mailto:' + value).text(value);
+		default:
+			return value;
+	}
 }

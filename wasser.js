@@ -5,7 +5,7 @@ function getWasser(map,featureLayer){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 16){
+	if(map.getZoom() < 17){
 		return;
 	}
 	
@@ -100,22 +100,4 @@ function getWasserObjects(featureLayer,nodes,ways,relations){
 		j = j+i;
 	}
 	alert(j);*/
-}
-
-function addWasserFeature(featureLayer,point,tags){
-	var featureIcon = getFeatureIcon('amenity=fire_station',16);
-	
-	if(!tags.name){
-		tags.name = 'Wasser';
-	}
-	
-	featureLayer.addLayer(
-		new L.Marker(
-			point,
-			{
-				icon: featureIcon,
-				title: tags.name
-			}
-		).bindPopup(tags.name)
-	);
 }

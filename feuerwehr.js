@@ -49,40 +49,39 @@ function getFeuerwehr(map,featureLayer){
 }
 
 function getFeuerwehrObjects(featureLayer,nodes,ways){
+	var icon = getFeatureIcon('amenity=fire_station',16);
+	var show = ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website'];
+	
 	for(var wayId in ways){
-		var way = ways[wayId];
+		var obj = ways[wayId];
 		var way_nodes = [];
-		for(var i=0;i<ways[wayId].nodes.length;i++){
-			var nodeId = ways[wayId].nodes[i];
+		for(var i=0;i<obj.nodes.length;i++){
+			var nodeId = obj.nodes[i];
 			way_nodes[i] = new L.LatLng(nodes[nodeId].lat,nodes[nodeId].lon);
 		}
-		addFeuerwehrFeature(featureLayer,new L.Polygon(way_nodes).getCenter(),way.tags);
+		var point = new L.Polygon(way_nodes).getCenter();
+		if(obj.tags.name){
+			var title = obj.tags.name;
+		}else{
+			var title = 'Feuerwehr';
+		}
+		var tags = obj.tags;
+		addPointFeature(featureLayer,point,icon,title,tags,show);
 	}
 	
 	for(var nodeId in nodes){
-		var node = nodes[nodeId];
-		if(node.tags){
-			if(node.tags.amenity == 'fire_station'){
-				addFeuerwehrFeature(featureLayer,new L.LatLng(node.lat,node.lon),node.tags);
+		var obj = nodes[nodeId];
+		if(obj.tags){
+			if(obj.tags.amenity == 'fire_station'){
+				var point = new L.LatLng(obj.lat,obj.lon);
+				if(obj.tags.name){
+					var title = obj.tags.name;
+				}else{
+					var title = 'Feuerwehr';
+				}
+				var tags = obj.tags;
+				addPointFeature(featureLayer,point,icon,title,tags,show);
 			}
 		}
 	}
-}
-
-function addFeuerwehrFeature(featureLayer,point,tags){
-	var featureIcon = getFeatureIcon('amenity=fire_station',16);
-	
-	if(!tags.name){
-		tags.name = 'Feuerwehrhaus';
-	}
-	
-	featureLayer.addLayer(
-		new L.Marker(
-			point,
-			{
-				icon: featureIcon,
-				title: tags.name
-			}
-		).bindPopup(tags.name)
-	);
 }
