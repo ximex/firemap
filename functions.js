@@ -62,7 +62,7 @@ function getPopupContent(title,tags,show){
 				var trans = translate(key,value);
 				key = trans[0]
 				value = trans[1];
-				table.append($('<tr>').append($('<th>').css('text-align','left').append($('<nobr>').text(key))).append($('<td>').append($('<nobr>').append(value).css('padding-left','8px'))));
+				table.append($('<tr>').append($('<th>').css('text-align','left').append($('<nobr>').text(key + ':'))).append($('<td>').append($('<nobr>').append(value).css('padding-left','8px'))));
 			}
 		}
 	}

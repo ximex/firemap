@@ -53,7 +53,7 @@ function getHydranten(map,featureLayer,featureLayerR){
 
 function getHydrantenObjects(featureLayer,featureLayerR,nodes){
 	var icon = getFeatureIcon('emergency=fire_hydrant',16);
-	var show = ['fire_hydrant:type','fire_hydrant:count','fire_hydrant:position'];
+	var show = ['ref','fire_hydrant:type','fire_hydrant:count','fire_hydrant:position','fire_hydrant:diameter','fire_hydrant:pressure','fire_hydrant:reservoir'];
 	var radius_obj = {radius: 150, color: '#00f'};
 	
 	for(var node in nodes){
