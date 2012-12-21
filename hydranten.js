@@ -61,6 +61,7 @@ function getHydrantenObjects(featureLayer,featureLayerR,nodes){
 		var point = new L.LatLng(obj.lat,obj.lon);
 		var title = 'Hydrant';
 		var tags = obj.tags;
-		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
+		addPointFeature(featureLayerR,point,radius_obj);
+		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
 }

@@ -70,7 +70,8 @@ function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
 			var title = 'Spital';
 		}
 		var tags = obj.tags;
-		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
+		addPointFeature(featureLayerR,point,radius_obj);
+		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
 	
 	for(var nodeId in nodes){
@@ -84,7 +85,8 @@ function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
 					var title = 'Spital';
 				}
 				var tags = obj.tags;
-				addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
+				addPointFeature(featureLayerR,point,radius_obj);
+				addMarkerFeature(featureLayer,point,icon,title,tags,show);
 			}
 		}
 	}

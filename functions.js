@@ -6,16 +6,7 @@ function getFeatureIcon(iconType,size){
 	});
 }
 
-function addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj){
-	featureLayerR.addLayer(
-		new L.Circle(point,radius_obj.radius,
-		{
-			weight: 1,
-			clickable: false,
-			color: radius_obj.color,
-			fillColor: radius_obj.color
-		})
-	);
+function addMarkerFeature(featureLayer,point,icon,title,tags,show){
 	featureLayer.addLayer(
 		new L.Marker(
 			point,
@@ -27,10 +18,22 @@ function addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,r
 	);
 }
 
-/*function addLineFeature(featureLayer,point,icon,title,tags,show){
+function addPointFeature(featureLayer,point,style_obj){
 	featureLayer.addLayer(
-		new L.Marker(
-			point,
+		new L.Circle(point,style_obj.radius,
+		{
+			weight: 1,
+			clickable: false,
+			color: style_obj.color,
+			fillColor: style_obj.color
+		})
+	);
+}
+
+/*function addLineFeature(featureLayer,points,title,tags,show,style_obj){
+	featureLayer.addLayer(
+		new L.Polyline(
+			points,
 			{
 				icon: icon,
 				title: title
@@ -39,13 +42,14 @@ function addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,r
 	);
 }
 
-function addAreaFeature(featureLayer,point,icon,title,tags,show){
+function addAreaFeature(featureLayer,points,title,tags,show,style_obj){
 	featureLayer.addLayer(
-		new L.Marker(
-			point,
+		new L.Polygon(
+			points,
 			{
-				icon: icon,
-				title: title
+				weight: 1,
+				color: style_obj.color,
+				fillColor: style_obj.color
 			}
 		).bindPopup(getPopupContent(title,tags,show))
 	);

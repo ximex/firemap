@@ -25,8 +25,8 @@ L.Polygon.prototype.getCenter = function(){
 	}
 	f = twicearea * 3;
 	
-	return {
-		lat: x / f + off.lat,
-		lng: y / f + off.lng
-	};
+	return new L.LatLng(
+		x / f + off.lat,
+		y / f + off.lng
+	);
 }

@@ -55,7 +55,8 @@ function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 	var icon = getFeatureIcon('amenity=fire_station',16);
 	var show = ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website'];
 	var radius_obj = {radius: 1500, color: '#f00'};
-	
+	//var data = new Array();
+	//var dataid = 0;
 	for(var wayId in ways){
 		var obj = ways[wayId];
 		var way_nodes = [];
@@ -70,7 +71,10 @@ function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 			var title = 'Feuerwehr';
 		}
 		var tags = obj.tags;
-		addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
+		//data[dataid] = point;
+		//dataid++;
+		addPointFeature(featureLayerR,point,radius_obj);
+		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
 	
 	for(var nodeId in nodes){
@@ -84,8 +88,13 @@ function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 					var title = 'Feuerwehr';
 				}
 				var tags = obj.tags;
-				addPointFeature(featureLayer,featureLayerR,point,icon,title,tags,show,radius_obj);
+				//data[dataid] = point;
+				//dataid++;
+				addPointFeature(featureLayerR,point,radius_obj);
+				addMarkerFeature(featureLayer,point,icon,title,tags,show);
 			}
 		}
 	}
+	//featureLayerR.setData(data);
+	//featureLayerR.redraw();
 }

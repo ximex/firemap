@@ -4,7 +4,7 @@ $(function(){
 	var map = initMap();
 	var baseLayers = getBaseLayers();
 	var overlays = getOverlays();
-	addLayers(map,baseLayers,overlays);	
+	addLayers(map,baseLayers,overlays);
 	addControls(map,baseLayers,overlays);
 	
 	getData(map,overlays);
@@ -36,12 +36,12 @@ function getBaseLayers(){
 
 function getOverlays(){
 	return {
-		"Feuerwehr": new L.LayerGroup(),
-		"FeuerwehrRadius": new L.LayerGroup(),
-		"Hydranten": new L.LayerGroup(),
+		"Feuerwehr": new L.MarkerClusterGroup({maxClusterRadius:16}),
+		"FeuerwehrRadius": new L.LayerGroup(),//new L.TileLayer.MaskCanvas({radius:1500,useAbsoluteRadius:true,color:'#000',opacity:0.5}),
+		"Hydranten": new L.MarkerClusterGroup({maxClusterRadius:16}),
 		"HydrantenRadius": new L.LayerGroup(),
 		//"Wasser": new L.LayerGroup(),
-		"Spital": new L.LayerGroup(),
+		"Spital": new L.MarkerClusterGroup({maxClusterRadius:16}),
 		"SpitalRadius": new L.LayerGroup()
 	};
 }
