@@ -1,12 +1,12 @@
-function getFeuerwehr(map,featureLayer,featureLayerR){	
+function getFeuerwehr(map,featureLayer,featureLayerC){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
-	featureLayerR.clearLayers();
 	
 	if(map.getZoom() < 12){
+		featureLayerC.setOpacity(0);
 		return;
 	}
 	
@@ -45,18 +45,18 @@ function getFeuerwehr(map,featureLayer,featureLayerR){
 			'relations': relations
 		}
 		featureLayer.clearLayers();
-		featureLayerR.clearLayers();
 		
-		getFeuerwehrObjects(featureLayer,featureLayerR,objects.nodes,objects.ways);
+		getFeuerwehrObjects(featureLayer,featureLayerC,objects.nodes,objects.ways);
 	});
 }
 
-function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
+function getFeuerwehrObjects(featureLayer,featureLayerC,nodes,ways){
+	featureLayerC.setOpacity(0.3);
 	var icon = getFeatureIcon('amenity=fire_station',16);
-	var show = ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website'];
-	var radius_obj = {radius: 1500, color: '#f00'};
-	//var data = new Array();
-	//var dataid = 0;
+	var show = ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website','fire_truk:klf','fire_truk:tlfa_2000'];
+	var data = new Array();
+	var dataid = 0;
+	
 	for(var wayId in ways){
 		var obj = ways[wayId];
 		var way_nodes = [];
@@ -66,14 +66,17 @@ function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 		}
 		var point = new L.Polygon(way_nodes).getCenter();
 		if(obj.tags.name){
-			var title = obj.tags.name;
+			if(obj.tags.ref){
+				var title = obj.tags.name + ' (Ref: ' + obj.tags.ref + ')';
+			}else{
+				var title = obj.tags.name;
+			}
 		}else{
 			var title = 'Feuerwehr';
 		}
 		var tags = obj.tags;
-		//data[dataid] = point;
-		//dataid++;
-		addPointFeature(featureLayerR,point,radius_obj);
+		data[dataid] = [point.lat,point.lng];
+		dataid++;
 		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
 	
@@ -83,18 +86,20 @@ function getFeuerwehrObjects(featureLayer,featureLayerR,nodes,ways){
 			if(obj.tags.amenity == 'fire_station'){
 				var point = new L.LatLng(obj.lat,obj.lon);
 				if(obj.tags.name){
-					var title = obj.tags.name;
+					if(obj.tags.ref){
+						var title = obj.tags.name + ' (Ref: ' + obj.tags.ref + ')';
+					}else{
+						var title = obj.tags.name;
+					}
 				}else{
 					var title = 'Feuerwehr';
 				}
 				var tags = obj.tags;
-				//data[dataid] = point;
-				//dataid++;
-				addPointFeature(featureLayerR,point,radius_obj);
+				data[dataid] = [point.lat,point.lng];
+				dataid++;
 				addMarkerFeature(featureLayer,point,icon,title,tags,show);
 			}
 		}
 	}
-	//featureLayerR.setData(data);
-	//featureLayerR.redraw();
+	featureLayerC.setData(data);
 }

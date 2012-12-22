@@ -54,6 +54,10 @@ function translate(key,value){
 			return ['Email',value];
 		case 'website':
 			return ['Webseite',value];
+		case 'fire_truk:klf':
+			return ['KLF',value];
+		case 'fire_truk:tlfa_2000':
+			return ['TLFA 2000',value];
 		default:
 			return [key,value];
 	}

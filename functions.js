@@ -17,7 +17,7 @@ function addMarkerFeature(featureLayer,point,icon,title,tags,show){
 		).bindPopup(getPopupContent(title,tags,show),{maxWidth:512})
 	);
 }
-
+/*
 function addPointFeature(featureLayer,point,style_obj){
 	featureLayer.addLayer(
 		new L.Circle(point,style_obj.radius,
@@ -30,7 +30,7 @@ function addPointFeature(featureLayer,point,style_obj){
 	);
 }
 
-/*function addLineFeature(featureLayer,points,title,tags,show,style_obj){
+function addLineFeature(featureLayer,points,title,tags,show,style_obj){
 	featureLayer.addLayer(
 		new L.Polyline(
 			points,
@@ -64,9 +64,9 @@ function getPopupContent(title,tags,show){
 			if(show[i] == key){
 				var value = checkValueFormat(key,tags[key]);
 				var trans = translate(key,value);
-				key = trans[0]
-				value = trans[1];
-				table.append($('<tr>').append($('<th>').css('text-align','left').append($('<nobr>').text(key + ':'))).append($('<td>').append($('<nobr>').append(value).css('padding-left','8px'))));
+				var form_key = trans[0]
+				var form_value = trans[1];
+				table.append($('<tr>').append($('<th>').css('text-align','left').append($('<nobr>').text(form_key + ':'))).append($('<td>').append($('<nobr>').append(form_value).css('padding-left','8px'))));
 			}
 		}
 	}

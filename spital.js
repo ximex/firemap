@@ -1,10 +1,9 @@
-function getSpital(map,featureLayer,featureLayerR){	
+function getSpital(map,featureLayer){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
-	featureLayerR.clearLayers();
 	
 	if(map.getZoom() < 10){
 		return;
@@ -45,16 +44,14 @@ function getSpital(map,featureLayer,featureLayerR){
 			'relations': relations
 		}
 		featureLayer.clearLayers();
-		featureLayerR.clearLayers();
 		
-		getSpitalObjects(featureLayer,featureLayerR,objects.nodes,objects.ways);
+		getSpitalObjects(featureLayer,objects.nodes,objects.ways);
 	});
 }
 
-function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
+function getSpitalObjects(featureLayer,nodes,ways){
 	var icon = getFeatureIcon('amenity=hospital',16);
 	var show = ['addr:housenumber','addr:street'];
-	var radius_obj = {radius: 15000, color: '#f0f'};
 	
 	for(var wayId in ways){
 		var obj = ways[wayId];
@@ -70,7 +67,6 @@ function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
 			var title = 'Spital';
 		}
 		var tags = obj.tags;
-		addPointFeature(featureLayerR,point,radius_obj);
 		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
 	
@@ -85,7 +81,6 @@ function getSpitalObjects(featureLayer,featureLayerR,nodes,ways){
 					var title = 'Spital';
 				}
 				var tags = obj.tags;
-				addPointFeature(featureLayerR,point,radius_obj);
 				addMarkerFeature(featureLayer,point,icon,title,tags,show);
 			}
 		}

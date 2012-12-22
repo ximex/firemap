@@ -1,18 +1,18 @@
-function getHydranten(map,featureLayer,featureLayerR){	
+function getHydranten(map,featureLayer,featureLayerC){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
 	
 	featureLayer.clearLayers();
-	featureLayerR.clearLayers();
 	
 	if(map.getZoom() < 16){
+		featureLayerC.setOpacity(0);
 		return;
 	}
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';
-	var query = '[out:json];node(BBOX)TAGS;out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, '[emergency=fire_hydrant]');
+	var query = '[out:json];(node(BBOX)[emergency=fire_hydrant];node(BBOX)[amenity=fire_hydrant];);out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
 	var overpass_query = url + query;
 	
 	$.getJSON(
@@ -45,23 +45,27 @@ function getHydranten(map,featureLayer,featureLayerR){
 			'relations': relations
 		}
 		featureLayer.clearLayers();
-		featureLayerR.clearLayers();
 		
-		getHydrantenObjects(featureLayer,featureLayerR,objects.nodes);
+		getHydrantenObjects(featureLayer,featureLayerC,objects.nodes);
 	});
 }
 
-function getHydrantenObjects(featureLayer,featureLayerR,nodes){
+function getHydrantenObjects(featureLayer,featureLayerC,nodes){
+	featureLayerC.setOpacity(0.3);
+	var data = new Array();
+	var dataid = 0;
+	
 	var icon = getFeatureIcon('emergency=fire_hydrant',16);
 	var show = ['ref','fire_hydrant:type','fire_hydrant:count','fire_hydrant:position','fire_hydrant:diameter','fire_hydrant:pressure','fire_hydrant:reservoir'];
-	var radius_obj = {radius: 150, color: '#00f'};
 	
 	for(var node in nodes){
 		var obj = nodes[node];
 		var point = new L.LatLng(obj.lat,obj.lon);
 		var title = 'Hydrant';
 		var tags = obj.tags;
-		addPointFeature(featureLayerR,point,radius_obj);
+		data[dataid] = [point.lat,point.lng];
+		dataid++;
 		addMarkerFeature(featureLayer,point,icon,title,tags,show);
 	}
+	featureLayerC.setData(data);
 }
