@@ -1,13 +1,14 @@
-function getSpital(map,featureLayer){	
-	var nodes = {};
-	var ways = {};
-	var relations = {};
+function getSpital(featureLayer){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 10){
+	if(map.getZoom() < 10 || !$('#layer_hospital').is(':checked')){
 		return;
 	}
+	
+	var nodes = {};
+	var ways = {};
+	var relations = {};
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';

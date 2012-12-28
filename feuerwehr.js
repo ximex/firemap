@@ -1,14 +1,15 @@
-function getFeuerwehr(map,featureLayer,featureLayerC){	
-	var nodes = {};
-	var ways = {};
-	var relations = {};
+function getFeuerwehr(featureLayer,featureLayerC){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 12){
+	if(map.getZoom() < 12 || (!$('#layer_fire_station').is(':checked') && !$('#layer_fire_station_coverage').is(':checked'))){
 		featureLayerC.setOpacity(0);
 		return;
 	}
+	
+	var nodes = {};
+	var ways = {};
+	var relations = {};
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';

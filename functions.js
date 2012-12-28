@@ -83,3 +83,47 @@ function checkValueFormat(key,value){
 			return value;
 	}
 }
+
+function rounding(value,digits){
+	return Math.round(value*Math.pow(10,digits))/Math.pow(10,digits);
+}
+
+function layer_fire_station_change(){
+	if($('#layer_fire_station').is(':checked')){
+		map.addLayer(overlays.fire_station);
+	}else{
+		map.removeLayer(overlays.fire_station);
+	}
+}
+function layer_fire_station_coverage_change(){
+	if($('#layer_fire_station_coverage').is(':checked')){
+		map.addLayer(overlays.fire_station_coverage);
+	}else{
+		map.removeLayer(overlays.fire_station_coverage);
+	}
+}
+function layer_fire_hydrant_change(){
+	if($('#layer_fire_hydrant').is(':checked')){
+		map.addLayer(overlays.fire_hydrant);
+	}else{
+		map.removeLayer(overlays.fire_hydrant);
+	}
+}
+function layer_fire_hydrant_coverage_change(){
+	if($('#layer_fire_hydrant_coverage').is(':checked')){
+		map.addLayer(overlays.fire_hydrant_coverage);
+	}else{
+		map.removeLayer(overlays.fire_hydrant_coverage);
+	}
+}
+function layer_hospital_change(){
+	if($('#layer_hospital').is(':checked')){
+		map.addLayer(overlays.hospital);
+	}else{
+		map.removeLayer(overlays.hospital);
+	}
+}
+
+function zoomChanged(){
+	$('#layer_zoom').text(map.getZoom());
+}

@@ -2,40 +2,48 @@ body {
 	padding: 0;
 	margin: 0;
 }
-html, body, #map {
+html, body, #map, #side {
 	height: 100%;
 }
 
-#radius_menu {
-	position: fixed;
-	top: 64px;
-	right: 10px;
-	padding: 5px;
-	border-radius: 8px;
-	background-color: #fff;
-	box-shadow: #666 0 0 8px;
+#map {
+	position: absolute;
+	top: 0;
+	left: 352px;
+	right: 0;
+}
+#side {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 352px;
+	overflow-y: auto;
 }
 
-#radius_menu>img {
-	display: block;
+#search_objects {
+	display: none;
 }
-
-#radius_menu:hover>img {
+#search_option_google {
 	display: none;
 }
 
-#radius_menu>div {
-	display: none;
+ul {
+	margin: 0;
+	padding-left: 16px;
 }
 
-#radius_menu:hover>div {
-	display: block;
+legend {
+	font-weight: bold;
 }
 
-#radius_menu h4 {
-	margin: 0 0 8px;
+form {
+	margin: 0;
 }
 
-#radius_menu ul {
-	list-style:none;margin:0;padding:0
+th {
+	text-align: left;
+}
+
+th, td {
+	padding: 0 4px;
 }

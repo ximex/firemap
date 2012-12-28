@@ -24,8 +24,8 @@
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script src="browser-update.js"></script>
 <script src="leaflet/leaflet.js"></script>
-<!--<script src="L.Control.Zoomslider/L.Control.Zoomslider.js"></script>
-<script src="L.Control.Locate/L.Control.Locate.js"></script>-->
+<script src="L.Control.Zoomslider/L.Control.Zoomslider.js"></script>
+<!--<script src="L.Control.Locate/L.Control.Locate.js"></script>-->
 <script src="L.MarkerCluster/L.MarkerCluster.js"></script>
 <script src="L.TileLayer.MaskCanvas/L.TileLayer.MaskCanvas.js"></script>
 <script src="L.TileLayer.MaskCanvas/QuadTree.js"></script>
@@ -37,25 +37,77 @@
 <!--<script src="wasser.js"></script>-->
 <script src="spital.js"></script>
 <script src="translate.js"></script>
+<script src="search.js"></script>
+<script src="http://maps.google.com/maps/api/js?v=3&sensor=false"></script>
+
+
 
 </head>
 
 <body>
 
-<div id="map"></div>
-
-<!--<div id="radius_menu">
-	<img src="icons/radius.png" alt="Radius" width="26" height="26" />
-	<div>
-		<h4>Radius anzeigen</h4>
+<div id="side">
+	<h1>FireMap</h1>
+	<fieldset id="layers">
+		<legend>Layers (Zoom: <span id="layer_zoom">3</span>)</legend>
 		<ul>
-			<li><label><input type="checkbox" id="radius_feuerwehr" /> Feuerwehr (1,5km)</label></li>
-			<li><label><input type="checkbox" id="radius_hydrant" /> Hydrant (150m)</label></li>
-			<li><label><input type="checkbox" id="radius_wasser" /> Wasser (100m?)</label></li>
-			<li><label><input type="checkbox" id="radius_spital" /> Spital (15km)</label></li>
+			<li><label><input type="checkbox" id="layer_fire_station" checked="checked" onChange="layer_fire_station_change()" /> Feuerwehr (Zoom: 12+)</label></li>
+			<li><label><input type="checkbox" id="layer_fire_station_coverage" onChange="layer_fire_station_coverage_change()" /> Feuerwehr Abdeckung (Zoom: 12+)</label></li>
+			<li><label><input type="checkbox" id="layer_fire_hydrant" checked="checked" onChange="layer_fire_hydrant_change()" /> Hydanten (Zoom: 16+)</label></li>
+			<li><label><input type="checkbox" id="layer_fire_hydrant_coverage" onChange="layer_fire_hydrant_coverage_change()" /> Hydranten Abdeckung (Zoom: 16+)</label></li>
+			<li><label><input type="checkbox" id="layer_hospital" checked="checked" onChange="layer_hospital_change()" /> Spitäler (Zoom: 10+)</label></li>
 		</ul>
-	</div>
-</div>-->
+	</fieldset>
+	<fieldset id="suche">
+		<legend>Suche</legend>
+		<form action="#" onSubmit="searching()">
+			<input type="search" id="search_value" style="width:100%" />
+			<label>Suchtyp:
+			<select id="search_type" onChange="search_option_change()">
+				<option value="objects" selected="selected">Objekte</option>
+				<option value="google">Google</option>
+			</select></label>
+			<label id="search_option_objects">Exakt: <input type="checkbox" id="search_option_accurate" /></label>
+			<label id="search_option_google">Regional: <input type="checkbox" id="search_option_regional" /></label>
+			<input type="submit" value="Suchen" style="text-align:right" />
+		</form>
+	<fieldset id="search_objects">
+		<legend>Such-Objekte</legend>
+		<ul id="search_results">
+		</ul>
+	</fieldset>
+	</fieldset>
+	<fieldset id="objekt_info">
+		<legend>Objekt Infos:</legend>
+		<h3>Main</h3>
+		<table>
+			<tr>
+				<th>Adresse:</th>
+				<td>Musterstraße 1, 1000 Musterstadt</td>
+			</tr>
+			<tr>
+				<th></th>
+				<td></td>
+			</tr>
+		</table>
+		<h3>Kontakt</h3>
+		<table>
+			<tr>
+				<th>Telefon:</th>
+				<td>0123 4567890</td>
+			</tr>
+			<tr>
+				<th>Email:</th>
+				<td><a href="mailto:max.mustermann@mail.com">max.mustermann@mail.com</a></td>
+			</tr>
+			<tr>
+				<th>Webseite:</th>
+				<td><a href="http://www.example.org/">http://www.example.org/</a></td>
+			</tr>
+		</table>
+	</fieldset>
+</div>
+<div id="map"></div>
 
 </body>
 

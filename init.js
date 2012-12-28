@@ -1,13 +1,16 @@
 ﻿var language = window.navigator.userLanguage || window.navigator.language;
+var map,baseLayers,overlays;
 
 $(function(){
-	var map = initMap();
-	var baseLayers = getBaseLayers();
-	var overlays = getOverlays();
-	addLayers(map,baseLayers,overlays);
-	addControls(map,baseLayers,overlays);
+	map = initMap();
+	baseLayers = getBaseLayers();
+	overlays = getOverlays();
+	addLayers();
+	addControls();
 	
-	getData(map,overlays);
+	getData();
+	
+	map.on('zoomend',function(){zoomChanged();});
 });
 
 function initMap(){
@@ -36,40 +39,42 @@ function getBaseLayers(){
 
 function getOverlays(){
 	return {
-		"Feuerwehr": new L.MarkerClusterGroup({maxClusterRadius:16}),
-		"FeuerwehrCoverage": new L.TileLayer.MaskCanvas({radius:1500,useAbsoluteRadius:true,color:'#000'}),
-		"Hydranten": new L.MarkerClusterGroup({maxClusterRadius:16}),
-		"HydrantenCoverage": new L.TileLayer.MaskCanvas({radius:150,useAbsoluteRadius:true,color:'#000'}),
-		//"Wasser": new L.LayerGroup(),
-		"Spital": new L.MarkerClusterGroup({maxClusterRadius:16})
+		'fire_station': new L.MarkerClusterGroup({maxClusterRadius:16}),
+		'fire_station_coverage': new L.TileLayer.MaskCanvas({radius:1500,useAbsoluteRadius:true,color:'#000'}),
+		'fire_hydrant': new L.MarkerClusterGroup({maxClusterRadius:16}),
+		'fire_hydrant_coverage': new L.TileLayer.MaskCanvas({radius:200,useAbsoluteRadius:true,color:'#000'}),
+		//'water': new L.LayerGroup(),
+		'hospital': new L.MarkerClusterGroup({maxClusterRadius:16}),
+		'search_results': new L.LayerGroup()
 	};
 }
 
-function addLayers(map,baseLayers,overlays){
+function addLayers(){
 	map.addLayer(baseLayers.OpenStreetMap);
 	
-	map.addLayer(overlays.Feuerwehr);
-	//map.addLayer(overlays.FeuerwehrCoverage);
-	map.addLayer(overlays.Hydranten);
-	//map.addLayer(overlays.HydrantenCoverage);
-	//map.addLayer(overlays.Wasser);
-	map.addLayer(overlays.Spital);
+	map.addLayer(overlays.fire_station);
+	//map.addLayer(overlays.fire_station_coverage);
+	map.addLayer(overlays.fire_hydrant);
+	//map.addLayer(overlays.fire_hydrant_coverage);
+	//map.addLayer(overlays.water);
+	map.addLayer(overlays.hospital);
+	map.addLayer(overlays.search_results);
 }
 
-function addControls(map,baseLayers,overlays){
+function addControls(){
 	map.addControl(new L.Control.Scale());
 	map.addControl(new L.Control.Layers(baseLayers,overlays));
 	//map.addControl(new L.Control.Locate({follow: true}));
 }
 
-function getData(map,overlays){
-	getFeuerwehr(map,overlays.Feuerwehr,overlays.FeuerwehrCoverage);
-	getHydranten(map,overlays.Hydranten,overlays.HydrantenCoverage);
-	//getWasser(map,overlays.Wasser);
-	getSpital(map,overlays.Spital);
+function getData(){
+	getFeuerwehr(overlays.fire_station,overlays.fire_station_coverage);
+	getHydranten(overlays.fire_hydrant,overlays.fire_hydrant_coverage);
+	//getWasser(overlays.water);
+	getSpital(overlays.hospital);
 	
-	map.on('moveend',function(){getFeuerwehr(map,overlays.Feuerwehr,overlays.FeuerwehrCoverage)});
-	map.on('moveend',function(){getHydranten(map,overlays.Hydranten,overlays.HydrantenCoverage)});
-	//map.on('moveend',function(){getWasser(map,overlays.Wasser)});
-	map.on('moveend',function(){getSpital(map,overlays.Spital)});
+	map.on('moveend',function(){getFeuerwehr(overlays.fire_station,overlays.fire_station_coverage)});
+	map.on('moveend',function(){getHydranten(overlays.fire_hydrant,overlays.fire_hydrant_coverage)});
+	//map.on('moveend',function(){getWasser(overlays.water)});
+	map.on('moveend',function(){getSpital(overlays.hospital)});
 }

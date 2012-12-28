@@ -1,14 +1,15 @@
-function getHydranten(map,featureLayer,featureLayerC){	
-	var nodes = {};
-	var ways = {};
-	var relations = {};
+function getHydranten(featureLayer,featureLayerC){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 16){
+	if(map.getZoom() < 16 || (!$('#layer_fire_hydrant').is(':checked') && !$('#layer_fire_hydrant_coverage').is(':checked'))){
 		featureLayerC.setOpacity(0);
 		return;
 	}
+	
+	var nodes = {};
+	var ways = {};
+	var relations = {};
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';

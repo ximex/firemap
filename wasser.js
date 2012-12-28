@@ -1,4 +1,4 @@
-function getWasser(map,featureLayer){	
+function getWasser(featureLayer){	
 	var nodes = {};
 	var ways = {};
 	var relations = {};
