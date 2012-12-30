@@ -2,7 +2,7 @@ function getHydranten(featureLayer,featureLayerC){
 	
 	featureLayer.clearLayers();
 	
-	if(map.getZoom() < 16 || (!$('#layer_fire_hydrant').is(':checked') && !$('#layer_fire_hydrant_coverage').is(':checked'))){
+	if(map.getZoom() < 15 || (!$('#layer_fire_hydrant').is(':checked') && !$('#layer_fire_hydrant_coverage').is(':checked'))){
 		featureLayerC.setOpacity(0);
 		return;
 	}

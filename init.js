@@ -27,13 +27,29 @@ function initMap(){
 }
 
 function getBaseLayers(){
-	var osm = new L.TileLayer(
-		'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-		{ attribution: 'Map data © OpenStreetMap contributors' }
-	);
-	
 	return {
-		"OpenStreetMap": osm
+		'OpenStreetMap': new L.TileLayer.Provider('OpenStreetMap.Mapnik'),
+		'OpenStreetMap German Style': new L.TileLayer.Provider('OpenStreetMap.DE'),
+		'OpenStreetMap Black and White': new L.TileLayer.Provider('OpenStreetMap.BlackAndWhite'),
+		'Thunderforest OpenCycleMap': new L.TileLayer.Provider('Thunderforest.OpenCycleMap'),
+		'Thunderforest Transport': new L.TileLayer.Provider('Thunderforest.Transport'),
+		'Thunderforest Landscape': new L.TileLayer.Provider('Thunderforest.Landscape'),
+		'MapQuest OSM': new L.TileLayer.Provider('MapQuestOpen.OSM'),
+		'MapQuest Aerial': new L.TileLayer.Provider('MapQuestOpen.Aerial'),
+		'MapBox Simple': new L.TileLayer.Provider('MapBox.Simple'),
+		'MapBox Streets': new L.TileLayer.Provider('MapBox.Streets'),
+		'MapBox Light': new L.TileLayer.Provider('MapBox.Light'),
+		'MapBox Lacquer': new L.TileLayer.Provider('MapBox.Lacquer'),
+		'MapBox Warden': new L.TileLayer.Provider('MapBox.Warden'),
+		'Stamen Toner': new L.TileLayer.Provider('Stamen.Toner'),
+		'Stamen Terrain': new L.TileLayer.Provider('Stamen.Terrain'),
+		'Stamen Watercolor': new L.TileLayer.Provider('Stamen.Watercolor'),
+		'Esri WorldStreetMap': new L.TileLayer.Provider('Esri.WorldStreetMap'),
+		'Esri DeLorme': new L.TileLayer.Provider('Esri.DeLorme'),
+		'Esri WorldTopoMap': new L.TileLayer.Provider('Esri.WorldTopoMap'),
+		'Esri WorldImagery': new L.TileLayer.Provider('Esri.WorldImagery'),
+		'Esri OceanBasemap': new L.TileLayer.Provider('Esri.OceanBasemap'),
+		'Esri NatGeoWorldMap': new L.TileLayer.Provider('Esri.NatGeoWorldMap')
 	};
 }
 
