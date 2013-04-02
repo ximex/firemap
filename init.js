@@ -28,28 +28,28 @@ function initMap(){
 
 function getBaseLayers(){
 	return {
-		'OpenStreetMap': new L.TileLayer.Provider('OpenStreetMap.Mapnik'),
-		'OpenStreetMap German Style': new L.TileLayer.Provider('OpenStreetMap.DE'),
-		'OpenStreetMap Black and White': new L.TileLayer.Provider('OpenStreetMap.BlackAndWhite'),
-		'Thunderforest OpenCycleMap': new L.TileLayer.Provider('Thunderforest.OpenCycleMap'),
-		'Thunderforest Transport': new L.TileLayer.Provider('Thunderforest.Transport'),
-		'Thunderforest Landscape': new L.TileLayer.Provider('Thunderforest.Landscape'),
-		'MapQuest OSM': new L.TileLayer.Provider('MapQuestOpen.OSM'),
-		'MapQuest Aerial': new L.TileLayer.Provider('MapQuestOpen.Aerial'),
-		'MapBox Simple': new L.TileLayer.Provider('MapBox.Simple'),
-		'MapBox Streets': new L.TileLayer.Provider('MapBox.Streets'),
-		'MapBox Light': new L.TileLayer.Provider('MapBox.Light'),
-		'MapBox Lacquer': new L.TileLayer.Provider('MapBox.Lacquer'),
-		'MapBox Warden': new L.TileLayer.Provider('MapBox.Warden'),
-		'Stamen Toner': new L.TileLayer.Provider('Stamen.Toner'),
-		'Stamen Terrain': new L.TileLayer.Provider('Stamen.Terrain'),
-		'Stamen Watercolor': new L.TileLayer.Provider('Stamen.Watercolor'),
-		'Esri WorldStreetMap': new L.TileLayer.Provider('Esri.WorldStreetMap'),
-		'Esri DeLorme': new L.TileLayer.Provider('Esri.DeLorme'),
-		'Esri WorldTopoMap': new L.TileLayer.Provider('Esri.WorldTopoMap'),
-		'Esri WorldImagery': new L.TileLayer.Provider('Esri.WorldImagery'),
-		'Esri OceanBasemap': new L.TileLayer.Provider('Esri.OceanBasemap'),
-		'Esri NatGeoWorldMap': new L.TileLayer.Provider('Esri.NatGeoWorldMap')
+		'OpenStreetMap_Mapnik': new L.TileLayer.Provider('OpenStreetMap.Mapnik'),
+		'OpenStreetMap_DE': new L.TileLayer.Provider('OpenStreetMap.DE'),
+		'OpenStreetMap_BlackandWhite': new L.TileLayer.Provider('OpenStreetMap.BlackAndWhite'),
+		'Thunderforest_OpenCycleMap': new L.TileLayer.Provider('Thunderforest.OpenCycleMap'),
+		'Thunderforest_Transport': new L.TileLayer.Provider('Thunderforest.Transport'),
+		'Thunderforest_Landscape': new L.TileLayer.Provider('Thunderforest.Landscape'),
+		'MapQuest_OSM': new L.TileLayer.Provider('MapQuestOpen.OSM'),
+		'MapQuest_Aerial': new L.TileLayer.Provider('MapQuestOpen.Aerial'),
+		'MapBox_Simple': new L.TileLayer.Provider('MapBox.Simple'),
+		'MapBox_Streets': new L.TileLayer.Provider('MapBox.Streets'),
+		'MapBox_Light': new L.TileLayer.Provider('MapBox.Light'),
+		'MapBox_Lacquer': new L.TileLayer.Provider('MapBox.Lacquer'),
+		'MapBox_Warden': new L.TileLayer.Provider('MapBox.Warden'),
+		'Stamen_Toner': new L.TileLayer.Provider('Stamen.Toner'),
+		'Stamen_Terrain': new L.TileLayer.Provider('Stamen.Terrain'),
+		'Stamen_Watercolor': new L.TileLayer.Provider('Stamen.Watercolor'),
+		'Esri_WorldStreetMap': new L.TileLayer.Provider('Esri.WorldStreetMap'),
+		'Esri_DeLorme': new L.TileLayer.Provider('Esri.DeLorme'),
+		'Esri_WorldTopoMap': new L.TileLayer.Provider('Esri.WorldTopoMap'),
+		'Esri_WorldImagery': new L.TileLayer.Provider('Esri.WorldImagery'),
+		'Esri_OceanBasemap': new L.TileLayer.Provider('Esri.OceanBasemap'),
+		'Esri_NatGeoWorldMap': new L.TileLayer.Provider('Esri.NatGeoWorldMap')
 	};
 }
 
@@ -66,7 +66,7 @@ function getOverlays(){
 }
 
 function addLayers(){
-	map.addLayer(baseLayers.OpenStreetMap);
+	map.addLayer(baseLayers.OpenStreetMap_Mapnik);
 	
 	map.addLayer(overlays.fire_station);
 	//map.addLayer(overlays.fire_station_coverage);
