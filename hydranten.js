@@ -13,7 +13,7 @@ function getHydranten(featureLayer,featureLayerC){
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';
-	var query = '[out:json];(node(BBOX)[emergency=fire_hydrant];node(BBOX)[amenity=fire_hydrant];);out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
+	var query = '[out:json];(node(BBOX)[emergency=fire_hydrant];node(BBOX)[amenity=fire_hydrant];);out body;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString());
 	var overpass_query = url + query;
 	
 	$.getJSON(

@@ -11,14 +11,12 @@
 <link rel="stylesheet" href="main.css" />
 <link rel="stylesheet" href="leaflet/leaflet.css" />
 <link rel="stylesheet" href="L.Control.Zoomslider/L.Control.Zoomslider.css" />
-<link rel="stylesheet" href="L.Control.Locate/L.Control.Locate.css" />
+<!--<link rel="stylesheet" href="L.Control.Locate/L.Control.Locate.css" />-->
 <link rel="stylesheet" href="L.MarkerCluster/L.MarkerCluster.css" />
 <link rel="stylesheet" href="L.MarkerCluster/L.MarkerCluster.Default.css" />
 <!--[if lt IE 9]>
-    <link rel="stylesheet" href="leaflet/leaflet.ie.css" />
 	<link rel="stylesheet" href="L.Control.Zoomslider/L.Control.Zoomslider.ie.css" />
 	<link rel="stylesheet" href="L.Control.Locate/L.Control.Locate.ie.css" />
-	<link rel="stylesheet" href="L.MarkerCluster/L.MarkerCluster.Default.ie.css" />
 <![endif]-->
 
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -51,6 +49,13 @@
 	<h1>FireMap</h1>
 	<fieldset id="layers">
 		<legend>Layers (Zoom: <span id="layer_zoom">3</span>)</legend>
+		<label>
+			Baselayer:
+			<select id="baselayers" onChange="baselayer_change()">
+				<option value="OpenStreetMap_Mapnik" selected="selected">Mapnik</option>
+				<option value="OpenStreetMap_DE">Mapnik - German Style</option>
+			</select>
+		</label>
 		<ul>
 			<li><label><input type="checkbox" id="layer_fire_station" checked="checked" onChange="layer_fire_station_change()" /> Feuerwehr (Zoom: 12+)</label></li>
 			<li><label><input type="checkbox" id="layer_fire_station_coverage" onChange="layer_fire_station_coverage_change()" /> Feuerwehr Abdeckung (Zoom: 12+)</label></li>

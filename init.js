@@ -19,7 +19,8 @@ function initMap(){
 		minZoom: 0,
 		maxZoom: 18,
 		center: new L.LatLng(0,0),
-		zoom: 3
+		zoom: 3,
+		zoomControl: false
 	}).locate({
 		setView: true,
 		maxZoom: 12
@@ -80,6 +81,7 @@ function addLayers(){
 function addControls(){
 	map.addControl(new L.Control.Scale());
 	map.addControl(new L.Control.Layers(baseLayers,overlays));
+	map.addControl(new L.Control.Zoomslider());
 	//map.addControl(new L.Control.Locate({follow: true}));
 }
 

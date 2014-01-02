@@ -87,7 +87,18 @@ function checkValueFormat(key,value){
 function rounding(value,digits){
 	return Math.round(value*Math.pow(10,digits))/Math.pow(10,digits);
 }
-
+function baselayer_change(){
+	var layer = $('#baselayers').val();
+	alert(layer);
+	switch(layer){
+		case 'OpenStreetMap_Mapnik':
+			map.addLayer(baseLayers.OpenStreetMap_Mapnik,true);
+		case 'OpenStreetMap_DE':
+			map.addLayer(baseLayers.OpenStreetMap_DE,true);
+		default:
+			map.addLayer(baseLayers.OpenStreetMap_Mapnik,true);
+	}
+}
 function layer_fire_station_change(){
 	if($('#layer_fire_station').is(':checked')){
 		map.addLayer(overlays.fire_station);

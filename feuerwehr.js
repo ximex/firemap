@@ -13,7 +13,7 @@ function getFeuerwehr(featureLayer,featureLayerC){
 	
 	//var url = 'http://overpass.osm.rambler.ru/cgi/interpreter?data=';
 	var url = 'http://overpass-api.de/api/interpreter?data=';
-	var query = '[out:json];(way(BBOX)TAGS;way(BBOX)TAGS;node(w);node(BBOX)TAGS;);out qt;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, '[amenity=fire_station]');
+	var query = '[out:json];(node(BBOX)TAGS;way(BBOX)TAGS;relation(BBOX)TAGS;);out body;>;out skel;'.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, '[amenity=fire_station]');
 	var overpass_query = url + query;
 	
 	$.getJSON(
