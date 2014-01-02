@@ -1,13 +1,15 @@
 L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
-	options: {
+    options: {
         radius: 5,
-        useAbsoluteRadius: true,  // true: r in meters, false: r in pixels
+        useAbsoluteRadius: true, // true: radius in meters, false: radius in pixels
         color: '#000',
         opacity: 0.5,
+        noMask: false, // true results in normal (filled) circled, instead masked circles
+        lineColor: undefined, // color of the circle outline if noMask is true
         debug: false
-	},
+    },
 
-	initialize: function (options, data) {
+    initialize: function (options, data) {
         var self = this;
         L.Util.setOptions(this, options);
 
@@ -23,6 +25,26 @@ L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
             }
             this._draw(ctx);
         };
+    },
+
+    // return >0 if v1 > v2, <0 if v1 < v2, 0 if v1 == v2
+    _versionCompare: function (v1, v2) {
+        var va1 = v1.split(".");
+        var va2 = v2.split(".");
+
+        var limit = Math.min (va1.length, va2.length);
+        var result = 0;
+        for (var n = 0; (n < limit) && (result == 0); n++) {
+            result = (+va1[n]) - (+va2[n]);
+            if (isNaN(result)) {
+                return undefined;
+            }
+        }
+
+        if (result == 0) {
+            result = va1.length - va2.length;
+        }
+        return result;
     },
 
     _drawDebugInfo: function (ctx) {
@@ -41,31 +63,43 @@ L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
         g.strokeText(ctx.tilePoint.x + ' ' + ctx.tilePoint.y + ' ' + ctx.zoom, max / 2 - 30, max / 2 - 10);
     },
 
-    _createTile: function () {
+
+    _oldCreateTile: function () {
         var tile = this._canvasProto.cloneNode(false);
         tile.onselectstart = tile.onmousemove = L.Util.falseFn;
-
-        var tileSize = this.options.tileSize;
-        var g = tile.getContext('2d');
-        g.fillStyle = this.options.color;
-        g.fillRect(0, 0, tileSize, tileSize);
-        g.globalCompositeOperation = 'destination-out';
         return tile;
     },
 
+
     setData: function(dataset) {
         var self = this;
+
 
         this.bounds = new L.LatLngBounds(dataset);
 
         this._quad = new QuadTree(this._boundsToQuery(this.bounds), false, 6, 6);
 
+        var first = dataset[0];
+        var xc = 1, yc = 0;
+        if (first instanceof L.LatLng) {
+            xc = "lng";
+            yc = "lat";
+        }
+
         dataset.forEach(function(d) {
             self._quad.insert({
-                x: d[1], //lng
-                y: d[0] //lat
+                x: d[xc], //lng
+                y: d[yc] //lat
             });
         });
+
+        if (this._map) {
+            this.redraw();
+        }
+    },
+
+    setRadius: function(radius) {
+        this.options.radius = radius;
         this.redraw();
     },
 
@@ -74,7 +108,7 @@ L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
         var s = ctx.tilePoint.multiplyBy(this.options.tileSize);
 
         // actual coords to tile 'space'
-        var p = this._map.project(new L.LatLng(coords[0], coords[1]));
+        var p = this._map.project(new L.LatLng(coords.y, coords.x));
 
         // point to draw
         var x = Math.round(p.x - s.x);
@@ -86,16 +120,32 @@ L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
         var c = ctx.canvas,
             g = c.getContext('2d'),
             self = this,
-            p;
-        coordinates.forEach(function(coords){
+            p,
+            tileSize = this.options.tileSize;
+        g.fillStyle = this.options.color;
+
+        if (this.options.lineColor) {
+          g.strokeStyle = this.options.lineColor;
+          g.lineWidth = this.options.lineWidth || 1;
+        }
+        g.globalCompositeOperation = 'source-over';
+        if (!this.options.noMask) {
+            g.fillRect(0, 0, tileSize, tileSize);
+            g.globalCompositeOperation = 'destination-out';
+        }
+        coordinates.forEach(function(coords) {
             p = self._tilePoint(ctx, coords);
             g.beginPath();
             g.arc(p[0], p[1], self._getRadius(), 0, Math.PI * 2);
             g.fill();
+            if (self.options.lineColor) {
+                g.stroke();
+            }
         });
     },
 
     _boundsToQuery: function(bounds) {
+        if (bounds.getSouthWest() == undefined) { return {x: 0, y: 0, width: 0.1, height: 0.1}; } // for empty data sets
         return {
             x: bounds.getSouthWest().lng,
             y: bounds.getSouthWest().lat,
@@ -153,18 +203,17 @@ L.TileLayer.MaskCanvas = L.TileLayer.Canvas.extend({
 
         var bounds = new L.LatLngBounds(this._map.unproject(sePoint), this._map.unproject(nwPoint));
 
-        var coordinates = [];
-        this._quad.retrieveInBounds(this._boundsToQuery(bounds)).forEach(function(obj) {
-            coordinates.push([obj.y, obj.x]);
-        });
+        var coordinates = this._quad.retrieveInBounds(this._boundsToQuery(bounds));
 
         this._drawPoints(ctx, coordinates);
-
-        var c = ctx.canvas;
-        var g = c.getContext('2d');
     }
 });
 
 L.TileLayer.maskCanvas = function (options) {
-    return new L.TileLayer.MaskCanvas(options);
+    var mc = new L.TileLayer.MaskCanvas(options);
+    var vcomp = mc._versionCompare("0.7", L.version);
+    if (vcomp !== undefined && vcomp < 0) {
+        mc._createTile = mc._oldCreateTile;
+    }
+    return mc;
 };
