@@ -1,4 +1,4 @@
-var $buoop = {vs:{i:8,f:15,o:11,s:5,n:9}}
+var $buoop = {vs:{i:10,f:25,o:11,s:6,n:9}}
 $buoop.ol = window.onload;
 window.onload=function(){
 	try {
