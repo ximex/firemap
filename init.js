@@ -10,6 +10,7 @@ $(function(){
 	
 	getData();
 	
+	map.on('moveend',function(){getData();});
 	map.on('zoomend',function(){zoomChanged();});
 });
 
@@ -86,13 +87,50 @@ function addControls(){
 }
 
 function getData(){
+	/*var FirestationConf = {
+		layerName: 'fire_station',
+		featureLayer: overlays.fire_station,
+		coverageLayer: overlays.fire_station_coverage,
+		minZoom: 12,
+		featureTypes: '[out:json];(node(BBOX)TAGS;way(BBOX)TAGS;relation(BBOX)TAGS;);out body;>;out skel;',
+		featureTags: '[amenity=fire_station]',
+		icon: getFeatureIcon('amenity=fire_station',16),
+		show: ['addr:postcode','addr:city','addr:street','addr:housenumber','phone','email','website','fire_truk:klf','fire_truk:tlfa_2000']
+	};
+	getLayerData(FirestationConf);*/
+	
 	getFeuerwehr(overlays.fire_station,overlays.fire_station_coverage);
 	getHydranten(overlays.fire_hydrant,overlays.fire_hydrant_coverage);
 	//getWasser(overlays.water);
 	getSpital(overlays.hospital);
+}
+
+function getLayerData(LayerDataConf){
+	LayerDataConf.featureLayer.clearLayers();
 	
-	map.on('moveend',function(){getFeuerwehr(overlays.fire_station,overlays.fire_station_coverage)});
-	map.on('moveend',function(){getHydranten(overlays.fire_hydrant,overlays.fire_hydrant_coverage)});
-	//map.on('moveend',function(){getWasser(overlays.water)});
-	map.on('moveend',function(){getSpital(overlays.hospital)});
+	if(map.getZoom() < LayerDataConf.minZoom || (!$('#layer_' + LayerDataConf.layerName).is(':checked') && !$('#layer_' + LayerDataConf.layerName + '_coverage').is(':checked'))){
+		LayerDataConf.coverageLayer.setOpacity(0);
+		return;
+	}
+	
+	LayerDataConf.coverageLayer.setOpacity(0.3);
+	
+	var url = 'http://overpass-api.de/api/interpreter?data=';
+	var query = LayerDataConf.featureTypes.replace(/(BBOX)/g, map.getBounds().toOverpassBBoxString()).replace(/TAGS/g, LayerDataConf.featureTags);
+	var overpass_query = url + query;
+	var geoJSONdata;
+	
+	$.getJSON(
+		overpass_query,
+		function(osmJSONdata){
+			geoJSONdata = osmtogeojson(osmJSONdata);
+		}
+	).complete(function(){
+		addGeoJSONfeatures(geoJSONdata);
+	});
+	function addGeoJSONfeatures(geoJSONdata){
+		//addMarkerFeature(LayerDataConf.featureLayer,point,LayerDataConf.icon,title,tags,LayerDataConf.show);
+		//overlays.Mitglieder.addData(geoJSONdata);
+		alert('test');
+	}
 }

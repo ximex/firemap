@@ -12,7 +12,7 @@ Anzeige von:
 
 ## Demo
 
-[http://rfmtc.no-ip.org/osm/firemap/](http://rfmtc.no-ip.org/osm/firemap/)
+[https://rfmtc.no-ip.org/osm/firemap/](https://rfmtc.no-ip.org/osm/firemap/)
 
 ## Technologien
 
@@ -22,7 +22,8 @@ Anzeige von:
 * [Leaflet-MarkerCluster](https://github.com/danzel/Leaflet.markercluster)
 * [Leaflet-MaskCanvas](https://github.com/domoritz/leaflet-maskcanvas)
 * [Leaflet-Providers](https://github.com/seelmann/leaflet-providers)
-* [jQuery](http://jquery.com/)
+* [OSMtoGeoJSON](https://github.com/tyrasd/osmtogeojson)
+* [jQuery](https://jquery.com/)
 * [Overpass-API](https://wiki.openstreetmap.org/wiki/Overpass_API)
 * [Browser-Update](http://www.browser-update.org/)
-* [Normalize.css](http://necolas.github.com/normalize.css/)
+* [Normalize.css](https://github.com/necolas/normalize.css/)
